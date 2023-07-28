@@ -5,36 +5,52 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var mEditTextTo: EditText
+    private lateinit var mEditTextSubject: EditText
+    private lateinit var mEditTextMessage: EditText
+    private lateinit var buttonSend: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val button = findViewById<Button>(R.id.simpleButton)
+        // Initialize the EditText and Button variables after calling setContentView
+        mEditTextTo = findViewById(R.id.edit_text_to)
+        mEditTextSubject = findViewById(R.id.edit_text_subject)
+        mEditTextMessage = findViewById(R.id.edit_text_message)
+        buttonSend = findViewById(R.id.button_send)
 
-        button.setOnClickListener {
-            // Create an intent with the action of sending an email
-            val intent = Intent(Intent.ACTION_SENDTO)
-
-            // Set the data of the intent to be a mailto URI
-            intent.data = Uri.parse("mailto:")
-
-            // Put the predefined email address, subject, and body as extras
-            intent.putExtra(Intent.EXTRA_EMAIL, arrayOf("example@example.com"))
-            intent.putExtra(Intent.EXTRA_SUBJECT, "Hello from Bing")
-            intent.putExtra(Intent.EXTRA_TEXT, "This is a test email")
-
-            // Check if there is an app that can handle the intent
-            if (intent.resolveActivity(packageManager) != null) {
-                // Start the activity with the intent
-                startActivity(intent)
-            } else {
-                // Show a toast message if no app can handle the intent
-                Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show()
-            }
+        buttonSend.setOnClickListener {
+            sendMail()
         }
+    }
 
+    private fun sendMail() {
+        val recipientList: String = mEditTextTo.text.toString()
+        var recipients = arrayOf<String>()
+
+        recipients = recipientList.split(",").toTypedArray()
+
+        val subject: String = mEditTextSubject.text.toString()
+        val message: String = mEditTextMessage.text.toString()
+
+        // Create a mailto URI with the recipients, subject, and message
+        val uri = Uri.parse("mailto:")
+            .buildUpon()
+            .appendQueryParameter("to", recipients.joinToString(","))
+            .appendQueryParameter("subject", subject)
+            .appendQueryParameter("body", message)
+            .build()
+
+        // Create an intent with the action of sending an email and the mailto URI
+        val intent = Intent(Intent.ACTION_SENDTO, uri)
+
+        // Start the activity with a chooser
+        startActivity(Intent.createChooser(intent, "Choose an email client"))
     }
 }
