@@ -18,7 +18,9 @@ class MainActivity : AppCompatActivity() {
 
         val button: Button = findViewById(R.id.buttonOne)
         button.setOnClickListener {
+            val message = "Hello from FirstActivity!"
             val intent = Intent(this, MainActivity2::class.java)
+            intent.putExtra("EXTRA_MESSAGE", message)
             startActivity(intent)
         }
     }
