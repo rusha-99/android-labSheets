@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.q1.AddTask
 import com.example.q1.R
 import com.example.q1.model.TaskListModel
 
@@ -32,9 +33,7 @@ class TaskListAdapter(tasklist:List<TaskListModel>,internal var context: Context
         return TaskViewHolder(view)
     }
 
-    override fun getItemCount(): Int {
-        return  tasklist.size
-    }
+
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val tasks =tasklist[position]
@@ -42,7 +41,14 @@ class TaskListAdapter(tasklist:List<TaskListModel>,internal var context: Context
         holder.details.text = tasks.details
 
         holder.btn_edit.setOnClickListener {
-            val i = Intent(context,AddTask ::class.java)
+            val i = Intent(context, AddTask ::class.java)
+            i.putExtra("Mode","E")
+            i.putExtra("Id",tasks.id)
+            context.startActivity(i)
         }
+    }
+
+    override fun getItemCount():Int{
+        return tasklist.size
     }
 }

@@ -15,7 +15,7 @@
         android:id="@+id/rv_list" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/bt_add_items"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Add Task"
