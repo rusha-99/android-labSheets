@@ -29,7 +29,7 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Name : Upload Tutorials"
+            android:text="Name : "
             android:textSize="20sp" />
 
         <TextView
@@ -37,7 +37,7 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Details: Here we have a details of the task"
+            android:text="Age:"
             android:textSize="20sp" />
 
         <Button

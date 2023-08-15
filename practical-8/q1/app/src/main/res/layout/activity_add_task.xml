@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:autofillHints="Enter Details"
-        android:hint="Enter Details"
+        android:hint="Enter Age"
         android:inputType="text" />
 
 
