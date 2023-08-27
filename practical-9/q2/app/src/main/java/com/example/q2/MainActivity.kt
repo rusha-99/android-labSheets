@@ -13,6 +13,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     private lateinit var sensorManager: SensorManager
     private var accelerometerSensor: Sensor? = null
     private lateinit var sensorValueTextView: TextView
+    private val SHAKE_THRESHOLD = 800 // Adjust this value as needed
+    private val SHAKE_INTERVAL = 1000 // Time interval in milliseconds between shakes
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,11 +40,31 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             sensorNameTextView.text = "Accelerometer Sensor not available"
         }
     }
+    private var lastShakeTime: Long = 0
 
     override fun onSensorChanged(event: SensorEvent?) {
         if (event?.sensor?.type == Sensor.TYPE_ACCELEROMETER) {
             val xAxisValue = event.values[0]
-            sensorValueTextView.text = "X-Axis Acceleration: $xAxisValue"
+
+            // Calculate acceleration magnitude
+            val acceleration = Math.sqrt(
+                (event.values[0] * event.values[0]
+                        + event.values[1] * event.values[1]
+                        + event.values[2] * event.values[2]).toDouble()
+            ).toFloat()
+
+            // Get current time
+            val currentTime = System.currentTimeMillis()
+
+            // Check for a shake gesture
+            if (acceleration > SHAKE_THRESHOLD
+                && currentTime - lastShakeTime > SHAKE_INTERVAL
+            ) {
+                lastShakeTime = currentTime
+                sensorValueTextView.text = "Shake Detected!"
+            } else {
+                sensorValueTextView.text = "X-Axis Acceleration: $xAxisValue"
+            }
         }
     }
 
