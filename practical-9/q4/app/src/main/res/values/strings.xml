@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">q4</string>
+    <string name="sensor_type" />
+    <string name="sensor_range" />
+    <string name="sensor_resolution" />
+    <string name="sensor_power" />
 </resources>

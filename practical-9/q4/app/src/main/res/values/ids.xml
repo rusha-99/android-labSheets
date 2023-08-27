@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="typeTextView" type="id" />
+    <item name="rangeTextView" type="id" />
+    <item name="resolutionTextView" type="id" />
+    <item name="powerTextView" type="id" />
+</resources>
